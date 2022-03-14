@@ -1,46 +1,44 @@
-#1. Import the libraries
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import sklearn
 
-#2. Import the dataset
 dataset = pd.read_csv("Wine.csv")
 X = dataset.iloc[: , :-1].values
 y = dataset.iloc[ : ,-1].values
 
-#3. Split the dataset into test set and training set
+# Splitting dataset into test set and training set
 from sklearn.model_selection import train_test_split
 print(sklearn.__version__)
 X_train , X_test , y_train , y_test = train_test_split(X, y , test_size = 0.2 ,random_state =0)
 
-#4. Feature Scaling
+# Feature Scaling
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-#5. Applying PCA
+# Applying PCA
 from sklearn.decomposition import PCA
 pca = PCA(n_components = 2)
 X_train = pca.fit_transform(X_train)
 X_test = pca.transform(X_test)
 
-#6 Train Logistic Regression model
+# Training Logistic Regression model
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression(random_state= 0)
 classifier.fit(X_train,y_train)
 
-#7. Confusion Matrix
+# Confusion Matrix
 from sklearn.metrics import confusion_matrix
 y_pred = classifier.predict(X_test)
 cm = confusion_matrix(y_test , y_pred)
 
-#8 Accuracy of the model
+# Accuracy of the model
 from sklearn.metrics import accuracy_score
 accuracy_score(y_test , y_pred)
 
-#9 Visualizing Training set result
+# Visualizing Training set result
 from matplotlib.colors import ListedColormap
 X_set , y_set = X_train , y_train
 X1,X2= np.meshgrid(np.arange(start = X_set[: ,0].min() -1,
